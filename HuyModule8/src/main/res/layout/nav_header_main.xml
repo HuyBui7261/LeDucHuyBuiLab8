@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="176dp"
+    android:background="?attr/colorPrimary"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/huyHeaderImage"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="Profile Icon"
+        android:src="@drawable/huy_alert_icon" /> <TextView
+    android:id="@+id/huyHeaderName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:text="Le Duc Huy Bui"
+    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+    android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/huyHeaderEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="n01667261@humber.ca" />
+
+</LinearLayout>
