@@ -1,6 +1,7 @@
 // Huy Bui N01667261
 package huy.bui.n01667261.huylab8;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -74,11 +75,11 @@ public class ShareFragment extends Fragment {
 
         //Create Dialog Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Huy Bui")
-                .setMessage("Current GMT Time: " + gmtTime)
+        builder.setTitle(R.string.huybui)
+                .setMessage(getString(R.string.currentgmttime) + gmtTime)
                 .setIcon(R.drawable.catdroid)
                 .setCancelable(false)
-                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss()); // b.iv. OK button dismisses
+                .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss()); // b.iv. OK button dismisses
 
         AlertDialog alertDialog = builder.create();
 
@@ -90,7 +91,7 @@ public class ShareFragment extends Fragment {
             }
 
             //Stylize title color to dark green
-            int titleId = requireContext().getResources().getIdentifier("alertTitle", "id", "android");
+            @SuppressLint("DiscouragedApi") int titleId = requireContext().getResources().getIdentifier("alertTitle", "id", "android");
             if (titleId > 0) {
                 TextView titleText = alertDialog.findViewById(titleId);
                 if (titleText != null) {
@@ -123,13 +124,13 @@ public class ShareFragment extends Fragment {
 
         //Validate valid email format
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailInput.setError("Please enter a valid email address!");
+            emailInput.setError(getString(R.string.please_enter_a_valid_email_address));
             isValid = false;
         }
 
         //Validate student ID has at least 6 digits
         if (idText.length() < 6) {
-            idInput.setError("Student ID must be at least 6 digits!");
+            idInput.setError(getString(R.string.student_id_must_be_at_least_6_digits));
             isValid = false;
         }
 
@@ -145,7 +146,7 @@ public class ShareFragment extends Fragment {
             editor.apply();
 
             //Format user info text to span across multiple lines
-            String snackbarText = "checkbox: " + isChecked + ",\nemail: " + email + ",\nid: " + studentId;
+            String snackbarText = getString(R.string.checkbox) + isChecked + getString(R.string.email2) + email + getString(R.string.id) + studentId;
 
             //Display snackbar with indefinite length and a Dismiss option
             Snackbar snackbar = Snackbar.make(requireView(), snackbarText, Snackbar.LENGTH_INDEFINITE);
@@ -156,7 +157,7 @@ public class ShareFragment extends Fragment {
             textView.setMaxLines(3);
 
 
-            snackbar.setAction("DISMISS", v -> snackbar.dismiss());
+            snackbar.setAction(R.string.dismiss, v -> snackbar.dismiss());
             snackbar.show();
 
             //Clear all input fields and focus

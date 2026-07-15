@@ -62,12 +62,12 @@ public class BuiActivity8 extends AppCompatActivity {
     }
     private void showLogoutConfirmation() {
         new AlertDialog.Builder(this)
-                .setTitle("Logout")
-                .setMessage("Are you sure you want to exit?")
+                .setTitle(R.string.logout)
+                .setMessage(R.string.are_you_sure_you_want_to_exit)
                 .setIcon(R.drawable.huy_alert_icon)
-                .setPositiveButton("Yes", (dialog, which) -> {
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
                     // Clear any stored SharedPreferences if needed
-                    getSharedPreferences("HuyPrefs_N01667261", MODE_PRIVATE)
+                    getSharedPreferences(getString(R.string.huyprefs_n01667261), MODE_PRIVATE)
                             .edit()
                             .clear()
                             .apply();
@@ -75,7 +75,7 @@ public class BuiActivity8 extends AppCompatActivity {
                     // Finish the activity and close the app
                     finishAffinity();
                 })
-                .setNegativeButton("No", (dialog, which) -> {
+                .setNegativeButton(R.string.no, (dialog, which) -> {
                     dialog.dismiss();
                 })
                 .setCancelable(false)

@@ -33,7 +33,7 @@ public class AboutUsFragment extends Fragment {
         orientationToggle = view.findViewById(R.id.huyOrientationToggle);
 
         //Initialize SharedPreferences using the same preference filename as ShareFragment
-        sharedPreferences = requireActivity().getSharedPreferences("HuyPrefs_N01667261", Context.MODE_PRIVATE);
+        sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.huyprefs_n01667261), Context.MODE_PRIVATE);
 
         //Read and display values saved from SharedPreferences
         displaySavedData();
@@ -43,11 +43,11 @@ public class AboutUsFragment extends Fragment {
             if (isChecked) {
                 //If toggle is ON, lock device orientation to portrait
                 requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                Toast.makeText(getContext(), "Orientation locked to Portrait", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.orientation_locked_to_portrait, Toast.LENGTH_SHORT).show();
             } else {
                 //If toggle is OFF, set to auto sensor orientation
                 requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                Toast.makeText(getContext(), "Orientation set to Auto-Sensor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.orientation_set_to_auto_sensor, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -68,10 +68,10 @@ public class AboutUsFragment extends Fragment {
         currentCount++;
 
         //Save updated count back to SharedPreferences
-        sharedPreferences.edit().putInt("about_visit_count", currentCount).apply();
+        sharedPreferences.edit().putInt(getString(R.string.about_visit_count), currentCount).apply();
 
         //Show Toast: "Counter: X | Huy Bui"
-        String toastMessage = "Counter: " + currentCount + " | Huy Bui";
+        String toastMessage = getString(R.string.counter) + currentCount + getString(R.string.huy_bui);
         Toast.makeText(getContext(), toastMessage, Toast.LENGTH_SHORT).show();
     }
 
@@ -83,14 +83,14 @@ public class AboutUsFragment extends Fragment {
             int id = sharedPreferences.getInt("id_val", 0);
 
             // Format and display the values cleanly
-            String formattedData = "CheckboxChecked: " + checkboxChecked + "\n" +
-                    "Email: " + email + "\n" +
-                    "Student ID: " + id;
+            String formattedData = getString(R.string.checkboxchecked) + checkboxChecked + "\n" +
+                    getString(R.string.email) + email + "\n" +
+                    getString(R.string.student_id) + id;
 
             prefsDisplayTxt.setText(formattedData);
         } else {
             // If no data exists, display "NO DATA"
-            prefsDisplayTxt.setText("NO DATA");
+            prefsDisplayTxt.setText(R.string.no_data);
         }
     }
 }

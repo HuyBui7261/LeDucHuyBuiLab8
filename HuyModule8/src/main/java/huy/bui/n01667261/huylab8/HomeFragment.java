@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
             imageView.setImageResource(currentImage);
 
             // Create and show a material Snackbar
-            String snackbarMessage = "Huy Bui | Clicks: " + clickCounter;
+            String snackbarMessage = getString(R.string.huy_bui_clicks) + clickCounter;
             Snackbar.make(view, snackbarMessage, Snackbar.LENGTH_SHORT).show();
         });
 

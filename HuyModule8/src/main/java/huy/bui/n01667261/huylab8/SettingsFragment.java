@@ -48,7 +48,7 @@ public class SettingsFragment extends Fragment {
                     if (uri != null) {
                         // Successfully picked a real image from device photos!
                         imageView.setImageURI(uri);
-                        Toast.makeText(getContext(), "Huy Bui | Image Loaded Successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.huy_bui_image_loaded_successfully, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -67,15 +67,15 @@ public class SettingsFragment extends Fragment {
 
                     if (allGranted) {
                         // Option A: Permission Allowed
-                        Toast.makeText(getContext(), "Huy Bui | Permission allowed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.huy_bui_permission_allowed, Toast.LENGTH_SHORT).show();
                         openDeviceGallery();
                     } else {
                         // Option B: Permission Denied - Show detailed OS toast
                         String sdkMessage;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            sdkMessage = "Huy Bui | Permission denied on API 33+ (Android 13+)";
+                            sdkMessage = getString(R.string.huy_bui_permission_denied_on_api_33_android_13);
                         } else {
-                            sdkMessage = "Huy Bui | Permission denied on API 32 or lower";
+                            sdkMessage = getString(R.string.huy_bui_permission_denied_on_api_32_or_lower);
                         }
                         Toast.makeText(getContext(), sdkMessage, Toast.LENGTH_LONG).show();
 
@@ -132,7 +132,7 @@ public class SettingsFragment extends Fragment {
         }
 
         if (isGranted) {
-            Toast.makeText(getContext(), "Huy Bui | Permission already allowed!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.huy_bui_permission_already_allowed, Toast.LENGTH_SHORT).show();
             openDeviceGallery();
         } else {
             // Launch the dynamic system permissions flow
@@ -148,15 +148,15 @@ public class SettingsFragment extends Fragment {
     // Guides users to application settings screen to resolve double-denials manually
     private void showSettingsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Permissions Required")
-                .setMessage("You have denied this permission twice. Please enable Storage/Media permission in App Settings to pick device photos.")
-                .setPositiveButton("Go To Settings", (dialog, id) -> {
+        builder.setTitle(R.string.permissions_required)
+                .setMessage(R.string.you_have_denied_this_permission_twice_please_enable_storage_media_permission_in_app_settings_to_pick_device_photos)
+                .setPositiveButton(R.string.go_to_settings, (dialog, id) -> {
                     Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                     Uri uri = Uri.fromParts("package", requireActivity().getPackageName(), null);
                     intent.setData(uri);
                     startActivity(intent);
                 })
-                .setNegativeButton("Cancel", (dialog, id) -> dialog.dismiss());
+                .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss());
         builder.create().show();
     }
 }
