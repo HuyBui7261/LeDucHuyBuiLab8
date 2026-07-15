@@ -53,10 +53,4 @@ public class BuiActivity8 extends AppCompatActivity {
         toggle.syncState();
     }
 
-    // Connects Toolbar Navigation back actions
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.huyNavHostFragment);
-        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
-    }
 }

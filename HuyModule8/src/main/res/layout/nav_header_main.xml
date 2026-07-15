@@ -13,14 +13,15 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:contentDescription="Profile Icon"
-        android:src="@drawable/huy_alert_icon" /> <TextView
-    android:id="@+id/huyHeaderName"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:text="Le Duc Huy Bui"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textStyle="bold" />
+        android:src="@drawable/catdroid" />
+    <TextView
+        android:id="@+id/huyHeaderName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="Le Duc Huy Bui"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/huyHeaderEmail"
