@@ -1,64 +1,162 @@
+// Huy Bui N01667261
 package huy.bui.n01667261.huylab8;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 public class SettingsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ImageView imageView;
+    private TextView titleTextView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // Launchers for System Picker and Permission Requests
+    private ActivityResultLauncher<String[]> permissionLauncher;
+    private ActivityResultLauncher<String> galleryLauncher;
 
     public SettingsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // 1. Initialize Photo Picker Launcher (To select image from Device Storage)
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                uri -> {
+                    if (uri != null) {
+                        // Successfully picked a real image from device photos!
+                        imageView.setImageURI(uri);
+                        Toast.makeText(getContext(), "Huy Bui | Image Loaded Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+        // 2. Initialize Permission Request Launcher
+        permissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                result -> {
+                    boolean allGranted = true;
+                    for (Boolean granted : result.values()) {
+                        if (!granted) {
+                            allGranted = false;
+                            break;
+                        }
+                    }
+
+                    if (allGranted) {
+                        // Option A: Permission Allowed
+                        Toast.makeText(getContext(), "Huy Bui | Permission allowed!", Toast.LENGTH_SHORT).show();
+                        openDeviceGallery();
+                    } else {
+                        // Option B: Permission Denied - Show detailed OS toast
+                        String sdkMessage;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            sdkMessage = "Huy Bui | Permission denied on API 33+ (Android 13+)";
+                        } else {
+                            sdkMessage = "Huy Bui | Permission denied on API 32 or lower";
+                        }
+                        Toast.makeText(getContext(), sdkMessage, Toast.LENGTH_LONG).show();
+
+                        // Check if denied permanently (User selected "Don't ask again" or denied twice)
+                        if (!shouldShowRequestPermissionRationale(getRequiredPermissions()[0])) {
+                            showSettingsDialog();
+                        }
+                    }
+                }
+        );
     }
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        // Bind layout views
+        titleTextView = view.findViewById(R.id.textView2);
+        imageView = view.findViewById(R.id.imageView2);
+        Button btnAccessPhotos = view.findViewById(R.id.button2);
+
+        // Click Action
+        btnAccessPhotos.setOnClickListener(v -> checkAndRequestPermissions());
+
+        return view;
+    }
+
+    // Determine which permissions to check depending on the system API version
+    private String[] getRequiredPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13 (API 33) or higher
+            return new String[]{
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO
+            };
+        } else {
+            // Android 12 (API 32) or lower
+            return new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            };
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+    private void checkAndRequestPermissions() {
+        String[] permissions = getRequiredPermissions();
+        boolean isGranted = true;
+
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+                isGranted = false;
+                break;
+            }
+        }
+
+        if (isGranted) {
+            Toast.makeText(getContext(), "Huy Bui | Permission already allowed!", Toast.LENGTH_SHORT).show();
+            openDeviceGallery();
+        } else {
+            // Launch the dynamic system permissions flow
+            permissionLauncher.launch(permissions);
+        }
+    }
+
+    private void openDeviceGallery() {
+        // Launches the native media visual file systems picker
+        galleryLauncher.launch("image/*");
+    }
+
+    // Guides users to application settings screen to resolve double-denials manually
+    private void showSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Permissions Required")
+                .setMessage("You have denied this permission twice. Please enable Storage/Media permission in App Settings to pick device photos.")
+                .setPositiveButton("Go To Settings", (dialog, id) -> {
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", requireActivity().getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                })
+                .setNegativeButton("Cancel", (dialog, id) -> dialog.dismiss());
+        builder.create().show();
     }
 }
