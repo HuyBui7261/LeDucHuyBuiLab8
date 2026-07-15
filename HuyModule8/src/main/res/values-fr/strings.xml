@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HuyLab8</string>
+    <string name="hello_blank_fragment">Bonjour fragment vide</string>
+    <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
+    <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
+
+    <string name="logout">Se déconnecter</string>
+    <string name="logout_confirm">Êtes-vous sûr de vouloir quitter ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+
+    <string name="orientation_locked_portrait">Orientation verrouillée en portrait</string>
+    <string name="orientation_auto_sensor">Orientation définie sur capteur automatique</string>
+
+    <string name="counter_toast_prefix">Compteur : </string>
+    <string name="counter_toast_suffix"> | Huy Bui</string>
+    <string name="checkbox_checked">CaseCochée : </string>
+    <string name="email_label">E-mail : </string>
+    <string name="student_id_label">Code d\'étudiant : </string>
+    <string name="no_data">AUCUNE DONNÉE</string>
+
+    <string name="clicks_prefix">Huy Bui | Clics : </string>
+    <string name="image_loaded_success">Huy Bui | Image chargée avec succès</string>
+    <string name="permission_allowed">Huy Bui | Autorisation accordée !</string>
+    <string name="permission_denied_api_33">Huy Bui | Autorisation refusée sur l\'API 33+ (Android 13+)</string>
+    <string name="permission_denied_api_32">Huy Bui | Autorisation refusée sur l\'API 32 ou inférieure</string>
+    <string name="permission_already_allowed">Huy Bui | Autorisation déjà accordée !</string>
+
+    <string name="permissions_required">Autorisations requises</string>
+    <string name="permissions_denied_twice">Vous avez refusé cette autorisation deux fois. Veuillez activer l\'autorisation d\'accès au stockage/médias dans les paramètres de l\'application pour choisir des photos de l\'appareil.</string>
+    <string name="go_to_settings">Aller aux paramètres</string>
+    <string name="cancel">Annuler</string>
+
+    <string name="gmt_dialog_title">Huy Bui</string>
+    <string name="current_gmt_time">Heure GMT actuelle : </string>
+    <string name="ok">OK</string>
+
+    <string name="invalid_email_error">Veuillez saisir une adresse e-mail valide !</string>
+    <string name="invalid_id_error">Le code d\'étudiant doit comporter au moins 6 chiffres !</string>
+
+    <string name="snackbar_checkbox_prefix">case à cocher : </string>
+    <string name="snackbar_email_prefix">, \ne-mail : </string>
+    <string name="snackbar_id_prefix">, \nid : </string>
+    <string name="dismiss">IGNORER</string>
+</resources>
