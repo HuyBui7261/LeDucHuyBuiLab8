@@ -1,6 +1,7 @@
 // Huy Bui N01667261
 package huy.bui.n01667261.huylab8;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ public class BuiActivity8 extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private AppBarConfiguration appBarConfiguration;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,33 @@ public class BuiActivity8 extends AppCompatActivity {
         );
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+
+        navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
+            showLogoutConfirmation();
+            return true;
+        });
+    }
+    private void showLogoutConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to exit?")
+                .setIcon(R.drawable.huy_alert_icon)
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // Clear any stored SharedPreferences if needed
+                    getSharedPreferences("HuyPrefs_N01667261", MODE_PRIVATE)
+                            .edit()
+                            .clear()
+                            .apply();
+
+                    // Finish the activity and close the app
+                    finishAffinity();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .setCancelable(false)
+                .show();
     }
 
 }
