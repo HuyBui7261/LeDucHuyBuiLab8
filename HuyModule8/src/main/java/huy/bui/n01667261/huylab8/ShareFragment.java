@@ -135,7 +135,7 @@ public class ShareFragment extends Fragment {
 
         if (isValid) {
             boolean isChecked = checkBox.isChecked();
-            int studentId = Integer.parseInt(idText); // j.iv.2.c. Must store as integer
+            int studentId = Integer.parseInt(idText);
 
             //Save data using SharedPreference
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -153,9 +153,8 @@ public class ShareFragment extends Fragment {
             // Set snackbar view to handle multi-line outputs
             View snackbarView = snackbar.getView();
             TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-            if (textView != null) {
-                textView.setMaxLines(3);
-            }
+            textView.setMaxLines(3);
+
 
             snackbar.setAction("DISMISS", v -> snackbar.dismiss());
             snackbar.show();
